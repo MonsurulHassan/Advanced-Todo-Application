@@ -1,0 +1,119 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Todo Application</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="custom.css">
+</head>
+
+<body>
+	<div class="container">
+		<div id="app" class="row mt-3">
+			<div class="col-sm-9">
+				<div class="card">
+				  <div class="card-header custom-app-background text-center text-success">
+					<strong>Todo Application</strong>
+				  </div>
+				  <div class="card-body">
+					<div class="row">
+						<div v-if="displayNewTask" class="col-sm-8 offset-sm-2">
+							<form v-on:submit.prevent="addTask">
+								<div class="row">
+									<div class="col-sm-6 form-group">
+										<input type="text" v-model="tasks.name" class="form-control" id="InputTask" placeholder="Add New Task">
+									</div>
+									<div class="col-sm-6">
+										<input type="submit" value="Add" class="btn btn-primary btn-block">
+									</div>
+								</div>
+							</form>	
+						</div>
+					</div>
+					
+					<div v-if="displayProgressBar" class="col-sm-8 offset-sm-2 mt-3">
+						<p><span class="badge badge-light badge-custom">Progress:</span></p>
+						<div class="GreyProgressBar">
+							<div class="GreenProgressBar text-center" v-bind:style="{width: percentageOfTasksCompleted + '%'}">{{ Math.round(percentageOfTasksCompleted) }}%</div>
+						</div>		
+					</div>
+					
+					<div v-if="displayTaskStat" class="col-sm-8 offset-sm-2 mt-5">
+						<p><span class="badge badge-light badge-custom">Task Statistics:</span></p>
+						<div class="row">
+							<div class="col-sm-6">
+								<p>Total tasks: {{tasks.length}} </p>
+								<p>Tasks left to do: {{tasksLeft}} </p>
+								<p>Tasks done: {{checkMarkedTasks}} </p>
+								<p>Deleted tasks: {{deletedTask}} </p>
+							</div>
+							<div class="col-sm-6 text-center">
+								<h4>Total tasks: {{tasks.length}}  </h4>
+								<a v-if="tasks.length < 11" class="btn btn-success text-white">Manageable</a>
+								<a v-else class="btn btn-danger text-white">Tasks overloaded</a>
+							</div>
+						</div>	
+					</div>
+					
+					<div v-if="displayTask && tasks.length > 0" class="col-sm-8 offset-sm-2 mt-4">
+						<table class="table">
+						  <thead>
+							<tr>
+							  <th scope="col">Task Done</th>
+							  <th scope="col">Task Name</th>
+							  <th scope="col">Delete</th>
+							</tr>
+						  </thead>
+						  <tbody >
+							<tr v-for="task in tasks">
+							  <td><input type="checkbox" v-model="task.done" /></td>
+							  <td><span v-bind:class="{taskDone:task.done}">{{task.name}}</span></td>
+							  <td><button v-on:click.prevent="deleteTask(task)" class="btn btn-block btn-sm btn-danger">Delete</button></td>
+							</tr>
+						  </tbody>
+						</table>	
+					</div>
+					<h3 class="text-center" v-else>Display task option is disabled or you have no tasks in the list.</h3>
+				  </div>
+				</div>
+			</div>
+		
+			<div class="col-sm-3">
+				<div class="card">
+				  <div class="card-header custom-option-background text-center text-primary">
+					Options
+				  </div>
+				  <div class="card-body">
+					<div class="custom-control custom-checkbox mb-3">
+						<input type="checkbox" class="custom-control-input" id="customControlValidation1" v-model="displayNewTask" >
+						<label class="custom-control-label" for="customControlValidation1">Display Add New Task</label>
+					</div>
+					<div class="custom-control custom-checkbox mb-3">
+						<input type="checkbox" class="custom-control-input" id="customControlValidation2" v-model="displayTask" >
+						<label class="custom-control-label" for="customControlValidation2">Display Tasks</label>
+					</div>
+					<div class="custom-control custom-checkbox mb-3">
+						<input type="checkbox" class="custom-control-input" id="customControlValidation3" v-model="displayTaskStat" >
+						<label class="custom-control-label" for="customControlValidation3">Display Task Stats</label>
+					</div>
+					<div class="custom-control custom-checkbox mb-3">
+						<input type="checkbox" class="custom-control-input" id="customControlValidation4" v-model="displayProgressBar" >
+						<label class="custom-control-label" for="customControlValidation4">Display Task Completion Progress Bar</label>
+					</div>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

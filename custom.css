@@ -1,0 +1,11 @@
+.custom-option-background{background:lightblue}
+.custom-app-background{background:lightgreen} 
+
+.GreyProgressBar{background:lightsteelblue}
+.GreenProgressBar{background:limegreen}
+
+.badge-custom{font-size:16px}
+
+.taskDone{
+	text-decoration:line-through;
+}
